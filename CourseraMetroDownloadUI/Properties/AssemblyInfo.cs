@@ -5,13 +5,13 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ModernUI.App")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Coursera Metro Download UI")]
+[assembly: AssemblyDescription("Coursera Metro Download UI")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("ModernUI.App")]
+[assembly: AssemblyCompany("Coursera Metro Download UI")]
+[assembly: AssemblyProduct("Coursera Metro Download UI")]
 [assembly: AssemblyCopyright("Copyright ©  2013")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyTrademark("Coursera Metro Download UI")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
