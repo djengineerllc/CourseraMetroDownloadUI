@@ -32,27 +32,55 @@
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
         <h3>
-<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
+<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>What is Coursera Metro Download UI?</h3>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+<p>
+  Coursera Metro Download UI is a Modern/Metro Front end to the python script "coursera-dl-script.ph" or "coursera-dl.exe".  The user interface allows you to easily download all of your classwork lectures/slides/videos/etc. from the Coursera website.  The original script can be found here: https://github.com/dgorissen/coursera-dl
+</p>
 
-<pre><code>$ cd your_repo_root/repo_name
+<!--<pre><code>$ cd your_repo_root/repo_name
 $ git fetch origin
 $ git checkout gh-pages
-</code></pre>
+</code></pre>-->
 
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
-
-<h3>
-<a name="designer-templates" class="anchor" href="#designer-templates"><span class="octicon octicon-link"></span></a>Designer Templates</h3>
-
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
 
 <h3>
-<a name="rather-drive-stick" class="anchor" href="#rather-drive-stick"><span class="octicon octicon-link"></span></a>Rather Drive Stick?</h3>
+<a name="designer-templates" class="anchor" href="#designer-templates"><span class="octicon octicon-link"></span></a>Setup</h3>
 
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
+<p>To setup Coursera Metro Download UI:
+  <ol>
+    <li>Make sure you have installed Python 2.7 and pip.</li>
+    <li>Install coursera-dl scripts: "pip install coursera-dl"</li>
+  </ol>
+  You are now ready to run the Frontend!
+</p>
 
+<h3>
+  <a name="coursera-dl" class="anchor" href="#coursera-dl"><span class="octicon octicon-link"></span></a>Coursera-DL USage</h3>
+<p>
+See: coursera-dl -h
+</p>
+<p>
+Example usage:
+</p>
+<p>
+<pre>
+coursera-dl -u myusername -p mypassword -d /my/coursera/courses/ algo-2012-001 ml-2012-002
+</pre>
+</p>
+<p>
+Note: you can also specify your login and password in .netrc file in your home directory.
+Just add this line to ~/.netrc
+<pre>
+machine coursera-dl login myusername password mypassword
+</pre>
+</p>
+<p>
+Now you can use coursera-dl like this:
+<pre>
+coursera-dl -d /my/coursera/courses/ algo-2012-001 ml-2012-002
+</pre>
+</p>
 <h3>
 <a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
 
