@@ -1,0 +1,20 @@
+﻿<mui:ModernWindow x:Class="CourseraMetroDownloadUI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mui="http://firstfloorsoftware.com/ModernUI"
+        IsTitleVisible="True"
+        LogoData="F1 M 17,20L 59,20L 59,56L 17,56L 17,20 Z M 20,26L 20,53L 56,53L 56,26L 20,26 Z M 23.75,31L 28.5,31L 33.25,37.5L 28.5,44L 23.75,44L 28.5,37.5L 23.75,31 Z "          
+        ContentSource="/Pages/Home.xaml" Title="Coursera Metro Download UI" Height="620" Width="970">
+    <!-- http://modernuiicons.com/ for more logo data icons -->
+    <mui:ModernWindow.MenuLinkGroups>
+        <mui:LinkGroup DisplayName="Coursera Download UI">
+            <mui:LinkGroup.Links>
+                <mui:Link DisplayName="Home" Source="/Pages/Home.xaml" />
+                <mui:Link DisplayName="Console" Source="/Pages/Console.xaml" />
+            </mui:LinkGroup.Links>
+        </mui:LinkGroup>
+    </mui:ModernWindow.MenuLinkGroups>    
+    <mui:ModernWindow.TitleLinks>
+        <mui:Link DisplayName="About" Source="/Pages/Settings.xaml" />
+    </mui:ModernWindow.TitleLinks>
+</mui:ModernWindow>
