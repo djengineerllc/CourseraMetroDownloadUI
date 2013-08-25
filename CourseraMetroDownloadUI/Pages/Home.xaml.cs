@@ -52,7 +52,7 @@ namespace CourseraMetroDownloadUI.Pages
         /// <summary>
         /// Open the OpenFileDialog to capture the path to the coursera-dl.exe or coursera-dl-script.py file to be able to download properly
         /// </summary>
-        /// <param name="sender">Find coursera-dl.exe button</param>
+        /// <param name="sender">Find coursera-dl script button</param>
         /// <param name="e">RoutedEventArgs</param>
         private void FindCourseDLExeBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -65,16 +65,21 @@ namespace CourseraMetroDownloadUI.Pages
             // Process open file dialog box results 
             if (result == true)
             {
-                // Open document 
+                // After document is picked, update the path text on the UI, add a tooltip in case the path is cut off, and store the script path for running later
                 mwParentWindow.COURSERA_DOWNLOAD_EXE_PATH = dlg.FileName;
                 PathText.Text = mwParentWindow.COURSERA_DOWNLOAD_EXE_PATH;
                 PathText.ToolTip = mwParentWindow.COURSERA_DOWNLOAD_EXE_PATH;
             }
         }
-
+        /// <summary>
+        /// Open the FileBrowserDialog to capture the download path of where everything will be downloaded to.
+        /// </summary>
+        /// <param name="sender">Download button</param>
+        /// <param name="e">RoutedEventArgs</param>
         private void DownloadButton_Click(object sender, RoutedEventArgs e)
         {
             FolderBrowserDialog folderDialog = new FolderBrowserDialog();
+            //Initialize the path to the C drive
             folderDialog.SelectedPath = "C:\\";
             DialogResult result = folderDialog.ShowDialog();
             if (result.ToString() == "OK")
@@ -84,7 +89,11 @@ namespace CourseraMetroDownloadUI.Pages
                 downloadPath.ToolTip = mwParentWindow.DOWNLOAD_DIRECTORY;
             }
         }
-
+        /// <summary>
+        /// Add a course to the Course Listbox
+        /// </summary>
+        /// <param name="sender">Add course button</param>
+        /// <param name="e">RoutedEventArgs</param>
         private void AddCourseBtn_Click(object sender, RoutedEventArgs e)
         {
             if (CourseText.Text != string.Empty)
@@ -93,7 +102,11 @@ namespace CourseraMetroDownloadUI.Pages
                 CourseText.Text = string.Empty;
             }
         }
-
+        /// <summary>
+        /// Remove selected course from the listbox.  If no course is selected, clear out the course textbox.
+        /// </summary>
+        /// <param name="sender">Delete course button</param>
+        /// <param name="e">RoutedEventArgs</param>
         private void DeleteCourseBtn_Click(object sender, RoutedEventArgs e)
         {
             if (CourseList.SelectedItems.Count > 0)
@@ -102,7 +115,11 @@ namespace CourseraMetroDownloadUI.Pages
             }
             else { CourseText.Text = string.Empty; }
         }
-
+        /// <summary>
+        /// Add a file extension to ignore to the ignore file extension Listbox
+        /// </summary>
+        /// <param name="sender">Ignore file extension button</param>
+        /// <param name="e">RoutedEventArgs</param>
         private void IgnoreFileExtBtn_Click(object sender, RoutedEventArgs e)
         {
             if (IgnoreExtText.Text != string.Empty)
@@ -111,7 +128,11 @@ namespace CourseraMetroDownloadUI.Pages
                 IgnoreExtText.Text = string.Empty;
             }
         }
-
+        /// <summary>
+        /// Remove selected file extension from the listbox.  If no file extension is selected, clear out the file extension textbox.
+        /// </summary>
+        /// <param name="sender">Delete file extension button</param>
+        /// <param name="e">RoutedEventArgs</param>
         private void DeleteFileExtBtn_Click(object sender, RoutedEventArgs e)
         {
             if (FileExtList.SelectedItems.Count > 0)
@@ -120,7 +141,11 @@ namespace CourseraMetroDownloadUI.Pages
             }
             else { IgnoreExtText.Text = string.Empty; }
         }
-
+        /// <summary>
+        /// Navigate to the About page to find out more information about the software (Coursera Metro Download UI)
+        /// </summary>
+        /// <param name="sender">Help button</param>
+        /// <param name="e">RoutedEventArgs</param>
         private void HelpButton_Click(object sender, RoutedEventArgs e)
         {
             if (mwParentWindow != null)
@@ -128,7 +153,11 @@ namespace CourseraMetroDownloadUI.Pages
                 mwParentWindow.ContentSource = new Uri("/Pages/Settings.xaml", UriKind.Relative);
             }
         }
-
+        /// <summary>
+        /// Create a process and run the script based upon specified inputs on the application, run the script, navigate to the console page.
+        /// </summary>
+        /// <param name="sender">Class download button</param>
+        /// <param name="e">RoutedEventArgs</param>
         private void ClassDownloadBtn_Click(object sender, RoutedEventArgs e)
         {
             mwParentWindow.runantc = new System.Diagnostics.Process();
@@ -190,7 +219,11 @@ namespace CourseraMetroDownloadUI.Pages
             }
             if (mwParentWindow.DataReceivedEvent != null) { mwParentWindow.DataReceivedEvent(Console.NewConsoleLine); }
         }
-
+        /// <summary>
+        /// As the console outputs data, send the data to the DataReceivedEvent to output to the Console screen.
+        /// </summary>
+        /// <param name="sendingProcess">Process</param>
+        /// <param name="outLine">DataReceivedEventArgs</param>
         private void runantc_OutputDataReceived(object sendingProcess, DataReceivedEventArgs outLine)
         {
             if (mwParentWindow != null) { if (mwParentWindow.DataReceivedEvent != null) { mwParentWindow.DataReceivedEvent(outLine.Data + "\n"); } }

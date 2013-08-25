@@ -28,7 +28,9 @@ namespace CourseraMetroDownloadUI
         public System.Diagnostics.Process runantc = null;
         public string COURSERA_DOWNLOAD_EXE_PATH = string.Empty;
         public string DOWNLOAD_DIRECTORY = string.Empty;
-
+        /// <summary>
+        /// MainWindow constructor, start the program's main window
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();

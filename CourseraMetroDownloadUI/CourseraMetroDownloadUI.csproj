@@ -72,7 +72,6 @@
       <DependentUpon>Console.xaml</DependentUpon>
     </Compile>
     <Compile Include="TextboxHelper.cs" />
-    <Compile Include="ThicknessToDoubleConverter.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
