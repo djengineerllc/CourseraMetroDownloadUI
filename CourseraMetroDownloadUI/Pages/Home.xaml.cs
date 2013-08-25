@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -24,10 +25,10 @@ namespace CourseraMetroDownloadUI.Pages
     /// </summary>
     public partial class Home : System.Windows.Controls.UserControl
     {
-        public string COURSERA_DOWNLOAD_EXE_PATH = string.Empty;
-        public string DOWNLOAD_DIRECTORY = string.Empty;
+
         public ObservableCollection<string> ProxyList = new ObservableCollection<string>();
-        ModernWindow ParentWindow;
+        MainWindow mwParentWindow;
+
         public Home()
         {
             InitializeComponent();
@@ -40,14 +41,10 @@ namespace CourseraMetroDownloadUI.Pages
             this.Loaded += Home_Loaded;
         }
 
-        void Home_Loaded(object sender, RoutedEventArgs e)
-        {
-            ParentWindow = (ModernWindow)Window.GetWindow(this);
-        }
+        void Home_Loaded(object sender, RoutedEventArgs e) { mwParentWindow = (MainWindow)Window.GetWindow(this); }
 
         private void FindCourseDLExeBtn_Click(object sender, RoutedEventArgs e)
         {
-
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
             //dlg.FileName = "Document"; // Default file name 
             dlg.DefaultExt = ".exe"; // Default file extension 
@@ -58,9 +55,9 @@ namespace CourseraMetroDownloadUI.Pages
             if (result == true)
             {
                 // Open document 
-                COURSERA_DOWNLOAD_EXE_PATH = dlg.FileName;
-                PathText.Text = COURSERA_DOWNLOAD_EXE_PATH;
-                PathText.ToolTip = COURSERA_DOWNLOAD_EXE_PATH;
+                mwParentWindow.COURSERA_DOWNLOAD_EXE_PATH = dlg.FileName;
+                PathText.Text = mwParentWindow.COURSERA_DOWNLOAD_EXE_PATH;
+                PathText.ToolTip = mwParentWindow.COURSERA_DOWNLOAD_EXE_PATH;
             }
         }
 
@@ -71,9 +68,9 @@ namespace CourseraMetroDownloadUI.Pages
             DialogResult result = folderDialog.ShowDialog();
             if (result.ToString() == "OK")
             {
-                DOWNLOAD_DIRECTORY = folderDialog.SelectedPath;
-                downloadPath.Text = DOWNLOAD_DIRECTORY;
-                downloadPath.ToolTip = DOWNLOAD_DIRECTORY;
+                mwParentWindow.DOWNLOAD_DIRECTORY = folderDialog.SelectedPath;
+                downloadPath.Text = mwParentWindow.DOWNLOAD_DIRECTORY;
+                downloadPath.ToolTip = mwParentWindow.DOWNLOAD_DIRECTORY;
             }
         }
 
@@ -92,10 +89,7 @@ namespace CourseraMetroDownloadUI.Pages
             {
                 CourseList.Items.RemoveAt(CourseList.Items.IndexOf(CourseList.SelectedItem));
             }
-            else
-            {
-                CourseText.Text = string.Empty;
-            }
+            else { CourseText.Text = string.Empty; }
         }
 
         private void IgnoreFileExtBtn_Click(object sender, RoutedEventArgs e)
@@ -113,44 +107,83 @@ namespace CourseraMetroDownloadUI.Pages
             {
                 FileExtList.Items.RemoveAt(FileExtList.Items.IndexOf(FileExtList.SelectedItem));
             }
-            else
-            {
-                IgnoreExtText.Text = string.Empty;
-            }
+            else { IgnoreExtText.Text = string.Empty; }
         }
 
         private void HelpButton_Click(object sender, RoutedEventArgs e)
         {
-            if (ParentWindow != null)
+            if (mwParentWindow != null)
             {
-                ParentWindow.ContentSource = new Uri("/Pages/Settings.xaml", UriKind.Relative);
+                mwParentWindow.ContentSource = new Uri("/Pages/Settings.xaml", UriKind.Relative);
             }
         }
 
         private void ClassDownloadBtn_Click(object sender, RoutedEventArgs e)
         {
-            using (System.Diagnostics.Process runantc = new System.Diagnostics.Process())
+            mwParentWindow.runantc = new System.Diagnostics.Process();
+            mwParentWindow.runantc.OutputDataReceived += runantc_OutputDataReceived;
+            mwParentWindow.runantc.StartInfo.FileName = "CMD.EXE";
+            string args = string.Format(
+                @"-u {0} -p {1} -d ""{2}""", 
+                email.Text,
+                password.Password,
+                mwParentWindow.DOWNLOAD_DIRECTORY
+            );
+            if (FileExtList.Items.Count > 0)
             {
-                runantc.StartInfo.FileName = "CMD.EXE";
-                runantc.StartInfo.Arguments = "/C " + COURSERA_DOWNLOAD_EXE_PATH + " --help";
-                runantc.StartInfo.UseShellExecute = false;
-                runantc.StartInfo.RedirectStandardOutput = true;
-                runantc.StartInfo.RedirectStandardError = true;
-                runantc.OutputDataReceived += runantc_OutputDataReceived;
-                if (ParentWindow != null)
+                string csvExts = string.Empty;
+                for (int i = 0; i < FileExtList.Items.Count; ++i)
                 {
-                    ParentWindow.ContentSource = new Uri("/Pages/Console.xaml", UriKind.Relative);
+                    if (i == 0) { csvExts = FileExtList.Items.GetItemAt(i).ToString(); }
+                    else { csvExts += "," + FileExtList.Items.GetItemAt(i).ToString(); }
                 }
-                runantc.Start();
-                runantc.BeginOutputReadLine();
-                runantc.Close();
+                args += string.Format(@" -n ""{0}""", csvExts);
             }
+            args += string.Format(" -q {0}", ParserCombo.SelectedValue.ToString());
+            if (proxy.Text != string.Empty)
+            {
+                args += string.Format(@" -x ""{0}""", proxy.Text);
+            }
+            if (ReverseSelections.IsChecked.GetValueOrDefault())
+            {
+                args += " --reverse-sections";
+            }
+            if (TrimPaths.IsChecked.GetValueOrDefault())
+            {
+                args += " --trim-path";
+            }
+            if (CourseList.Items.Count > 0)
+            {
+                string courses = string.Empty;
+                foreach (object item in CourseList.Items) { courses += " " + item.ToString(); }
+                args += courses;
+            }
+            mwParentWindow.runantc.StartInfo.Arguments = String.Format(
+                "/C {0} {1}",
+                mwParentWindow.COURSERA_DOWNLOAD_EXE_PATH,
+                args
+            );
+            mwParentWindow.runantc.StartInfo.CreateNoWindow = true;
+            mwParentWindow.runantc.StartInfo.UseShellExecute = false;
+            mwParentWindow.runantc.StartInfo.RedirectStandardOutput = true;
+            if (mwParentWindow != null)
+            {
+                mwParentWindow.ContentSource = new Uri("/Pages/Console.xaml", UriKind.Relative);
+            }
+            mwParentWindow.runantc.Start();
+            mwParentWindow.runantc.BeginOutputReadLine();
+            if (mwParentWindow.runantc != null)
+            {
+                try { mwParentWindow.runantc.Close(); }
+                catch (Exception ex) { }
+            }
+            if (mwParentWindow.DataReceivedEvent != null) { mwParentWindow.DataReceivedEvent(Console.NewConsoleLine); }
         }
 
-        void runantc_OutputDataReceived(object sendingProcess, DataReceivedEventArgs outLine)
+        private void runantc_OutputDataReceived(object sendingProcess, DataReceivedEventArgs outLine)
         {
-            MainWindow mw = (ParentWindow as MainWindow);
-            if (mw != null) { if (mw.DataReceivedEvent != null) { mw.DataReceivedEvent(outLine.Data); } }
+            if (mwParentWindow != null) { if (mwParentWindow.DataReceivedEvent != null) { mwParentWindow.DataReceivedEvent(outLine.Data + "\n"); } }
         }
+
     }
 }

@@ -24,41 +24,69 @@ namespace CourseraMetroDownloadUI.Pages
     /// </summary>
     public partial class Console : UserControl
     {
-        ModernWindow ParentWindow;
+
+        public static string NewConsoleLine = "\n\n--------------------------------------------------------------------------\n\n";
+        MainWindow mwParentWindow;
+        private object CONSOLE_OUT
+        {
+            get { return Output.Content; }
+            set { Output.Content = value; }
+        }
+
         public Console()
         {
             InitializeComponent();
             this.Loaded += Console_Loaded;
         }
 
-        public object CONSOLE_OUT
+        private void Console_Loaded(object sender, EventArgs e)
         {
-            get { return Output.Content; }
-            set { Output.Content = value; }
-        }
-
-        void Console_Loaded(object sender, RoutedEventArgs e)
-        {
-            ParentWindow = (ModernWindow)Window.GetWindow(this);
-            if (ParentWindow != null)
+            mwParentWindow = (MainWindow)Window.GetWindow(this);
+            if (mwParentWindow != null)
             {
-                MainWindow mw = ParentWindow as MainWindow;
-                if (mw != null)
+                if (mwParentWindow.DataReceivedEvent == null)
                 {
-                    mw.DataReceivedEvent += new CourseraMetroDownloadUI.MainWindow.ConsoleDataReceivedEventHandler(runantc_OutputDataReceived);
+                    mwParentWindow.DataReceivedEvent += new CourseraMetroDownloadUI.MainWindow.ConsoleDataReceivedEventHandler(runantc_OutputDataReceived);
                 }
             }
         }
-        void runantc_OutputDataReceived(string data)
+
+        private void runantc_OutputDataReceived(string data)
         {
-            DispatcherOperation dOper = Output.Dispatcher.BeginInvoke(DispatcherPriority.Input, new ThreadStart(() =>
+            Output.Dispatcher.BeginInvoke(new System.Windows.Forms.MethodInvoker(() => CONSOLE_OUT += data));
+        }
+
+        private void CancelOpBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (mwParentWindow.runantc != null)
             {
                 try
                 {
-                    CONSOLE_OUT += data + "\n";
+                    try { mwParentWindow.runantc.CancelOutputRead(); } catch (Exception ex) { }
+                    mwParentWindow.runantc.Close();
+                    mwParentWindow.runantc.Dispose();
+                    try { mwParentWindow.runantc.Kill(); } catch (Exception ex) { }
+                    mwParentWindow.runantc = null;
+                    CONSOLE_OUT += Console.NewConsoleLine;
+                    CONSOLE_OUT += "Operations have been aborted!";
                 }
-                catch { }
-            }));
+                catch(Exception ex) { CONSOLE_OUT += Console.NewConsoleLine + "No operations to cancel."; }
+            }
+            else { CONSOLE_OUT += Console.NewConsoleLine + "No operations to cancel."; }
         }
+
+        private void OpenDlDirBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (mwParentWindow.DOWNLOAD_DIRECTORY != string.Empty && System.IO.Directory.Exists(mwParentWindow.DOWNLOAD_DIRECTORY))
+            {
+                Process.Start(mwParentWindow.DOWNLOAD_DIRECTORY);
+            }
+        }
+
+        private void ClearConsoleBtn_Click(object sender, RoutedEventArgs e)
+        {
+            CONSOLE_OUT = string.Empty;
+        }
+        
     }
 }

@@ -98,14 +98,6 @@
                         <Button BorderBrush="#1BA1E2" BorderThickness="1" Grid.Column="1" Grid.Row="3" x:Name="ClassDownloadBtn" Content="Download" Click="ClassDownloadBtn_Click"/>
                         <Button Grid.Column="1" Grid.Row="4" Name="HelpButton" Click="HelpButton_Click" Content="Help" />
                     </Grid>
-                    <!--
-        
-    
-    
-    <Button x:Name="ClassDownloadBtn" Content="Download" Width="418" Height="42" Background="#FF022708" Click="ClassDownloadBtn_Click"/>
-    <Button Content="Help" Width="76" Height="55" Background="#FF4F0101"/>
-    <TextBlock x:Name="Output" Height="144" Width="418"/>-->
-
                 </Grid>
             </StackPanel>
         </ScrollViewer>

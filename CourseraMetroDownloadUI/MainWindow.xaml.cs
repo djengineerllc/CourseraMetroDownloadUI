@@ -22,8 +22,13 @@ namespace CourseraMetroDownloadUI
     /// </summary>
     public partial class MainWindow : ModernWindow
     {
+
         public delegate void ConsoleDataReceivedEventHandler(string data);
         public ConsoleDataReceivedEventHandler DataReceivedEvent;
+        public System.Diagnostics.Process runantc = null;
+        public string COURSERA_DOWNLOAD_EXE_PATH = string.Empty;
+        public string DOWNLOAD_DIRECTORY = string.Empty;
+
         public MainWindow()
         {
             InitializeComponent();
