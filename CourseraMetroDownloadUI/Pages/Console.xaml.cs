@@ -68,7 +68,7 @@ namespace CourseraMetroDownloadUI.Pages
                     try { mwParentWindow.runantc.Kill(); } catch (Exception ex) { }
                     mwParentWindow.runantc = null;
                     CONSOLE_OUT += Console.NewConsoleLine;
-                    CONSOLE_OUT += "Operations have been aborted!";
+                    CONSOLE_OUT += "Operations have been aborted! Check task manager and close any python scripts running to cancel the downloading process.";
                 }
                 catch(Exception ex) { CONSOLE_OUT += Console.NewConsoleLine + "No operations to cancel."; }
             }

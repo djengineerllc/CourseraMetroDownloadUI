@@ -26,17 +26,18 @@ namespace CourseraMetroDownloadUI.Pages
     public partial class Home : System.Windows.Controls.UserControl
     {
 
-        public ObservableCollection<string> ProxyList = new ObservableCollection<string>();
+        public ObservableCollection<string> ParserList = new ObservableCollection<string>();
         MainWindow mwParentWindow;
 
         public Home()
         {
             InitializeComponent();
-            ProxyList.Add("lxml");
-            ProxyList.Add("xml");
-            ProxyList.Add("html.parser");
-            ProxyList.Add("html5lib");
-            ParserCombo.ItemsSource = ProxyList;
+            ParserList.Add("html.parser");
+            ParserList.Add("html5lib");
+            ParserList.Add("lxml");
+            ParserList.Add("xml");
+            ParserCombo.ItemsSource = ParserList;
+            //The default parser is html.parser
             ParserCombo.SelectedIndex = 0;
             this.Loaded += Home_Loaded;
         }

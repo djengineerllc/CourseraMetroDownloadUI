@@ -94,7 +94,7 @@
                             
                         </Grid>
                         <TextBlock Grid.Column="0" Grid.Row="2" Text="Parser" TextAlignment="Right" FontSize="16"/>
-                        <ComboBox Grid.Column="1" Grid.Row="2" Name="ParserCombo" FontSize="15"></ComboBox>
+                        <ComboBox Grid.Column="1" Grid.Row="2" Name="ParserCombo" FontSize="15" ToolTip="default: html.parser"></ComboBox>
                         <Button BorderBrush="#1BA1E2" BorderThickness="1" Grid.Column="1" Grid.Row="3" x:Name="ClassDownloadBtn" Content="Download" Click="ClassDownloadBtn_Click"/>
                         <Button Grid.Column="1" Grid.Row="4" Name="HelpButton" Click="HelpButton_Click" Content="Help" />
                     </Grid>
