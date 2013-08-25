@@ -31,7 +31,7 @@
                         <TextBox Style="{StaticResource ResourceKey=WaterMarkTextBox}" Controls:TextboxHelper.SelectAllOnFocus="True" Controls:TextboxHelper.Watermark="Coursera Email" Grid.Column="1" Grid.Row="0" x:Name="email" BorderThickness="1"  UseLayoutRounding="True" FontSize="16" TextWrapping="Wrap"/>
                         <TextBlock Grid.Column="0" Grid.Row="1" TextWrapping="Wrap" Text="Password" TextAlignment="Right" FontSize="16" />
                         <PasswordBox Controls:TextboxHelper.Watermark="Coursera Password" Grid.Column="1" Grid.Row="1" x:Name="password" BorderThickness="1" FontSize="16"/>
-                        <Button Grid.Column="0" Grid.Row="2" Content="Find coursera-dl.exe" Name="FindCourseDLExeBtn" Click="FindCourseDLExeBtn_Click" FontSize="14" />
+                        <Button Grid.Column="0" Grid.Row="2" Content="Find coursera-dl Script" Name="FindCourseDLExeBtn" Click="FindCourseDLExeBtn_Click" FontSize="14" />
                         <TextBlock HorizontalAlignment="Left" MaxWidth="300" Grid.Column="1" Grid.Row="2" x:Name="PathText" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" Text="C:\Python27\Scripts\coursera-dl.exe" FontSize="16" />
                         <Button Grid.Column="0" Grid.Row="3" Content="Download Path" Click="DownloadButton_Click" FontSize="14"/>
                         <TextBlock HorizontalAlignment="Left" MaxWidth="300" Grid.Column="1" Grid.Row="3" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" Name="downloadPath" Text="Choose download path" FontSize="16" />

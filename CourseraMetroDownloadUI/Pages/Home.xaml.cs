@@ -28,7 +28,9 @@ namespace CourseraMetroDownloadUI.Pages
 
         public ObservableCollection<string> ParserList = new ObservableCollection<string>();
         MainWindow mwParentWindow;
-
+        /// <summary>
+        /// Constructor, initializes Parser list combobox, add loaded event
+        /// </summary>
         public Home()
         {
             InitializeComponent();
@@ -41,15 +43,23 @@ namespace CourseraMetroDownloadUI.Pages
             ParserCombo.SelectedIndex = 0;
             this.Loaded += Home_Loaded;
         }
-
+        /// <summary>
+        /// Store reference to the MainWindow when the page loads
+        /// </summary>
+        /// <param name="sender">Home page</param>
+        /// <param name="e">RoutedEventArgs</param>
         void Home_Loaded(object sender, RoutedEventArgs e) { mwParentWindow = (MainWindow)Window.GetWindow(this); }
-
+        /// <summary>
+        /// Open the OpenFileDialog to capture the path to the coursera-dl.exe or coursera-dl-script.py file to be able to download properly
+        /// </summary>
+        /// <param name="sender">Find coursera-dl.exe button</param>
+        /// <param name="e">RoutedEventArgs</param>
         private void FindCourseDLExeBtn_Click(object sender, RoutedEventArgs e)
         {
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
             //dlg.FileName = "Document"; // Default file name 
             dlg.DefaultExt = ".exe"; // Default file extension 
-            dlg.Filter = "Executable Binary (.exe)|*.exe"; // Filter files by extension
+            dlg.Filter = "Executable Binary (.exe)|*.exe|Python Script (*.py)|*.py"; // Filter files by extension
             // Show open file dialog box 
             Nullable<bool> result = dlg.ShowDialog();
             // Process open file dialog box results 

@@ -24,10 +24,9 @@
             <Button Name="ClearConsoleBtn" Content="Clear Console" Grid.Column="2" Click="ClearConsoleBtn_Click"></Button>
         </Grid>
         <GroupBox Grid.Row="2" Header="Console Output">
-            <ScrollViewer>
-                <Label ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" xml:space="preserve" Name="Output"></Label>
+            <ScrollViewer ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                <Label Name="Output"></Label>
             </ScrollViewer>
         </GroupBox>
     </Grid>
-        
 </UserControl>
